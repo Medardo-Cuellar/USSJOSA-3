@@ -137,7 +137,14 @@ void autonomoalterno2()
   BRAZO.stop(hold);
   avanzar(20);
   giro(180);
-  Drivetrain.setDriveVelocity(rapido,percent);
+  avanzar(15);
+
+
+}
+
+void autonomoalterno2continuacion()
+{
+    Drivetrain.setDriveVelocity(rapido,percent);
   wait(200,msec);
   avanzar(45);
   wait(200,msec);
@@ -148,9 +155,7 @@ void autonomoalterno2()
   avanzar(24);
   giro(45);
   avanzar(20);
-
 }
-
 
 
 
