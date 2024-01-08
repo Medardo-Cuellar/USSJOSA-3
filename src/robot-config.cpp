@@ -20,6 +20,9 @@ motor BRAZOMotorB = motor(PORT20, ratio36_1, true);
 motor Matraca = motor(PORT11, ratio6_1, true);
 motor_group BRAZO = motor_group(BRAZOMotorA, BRAZOMotorB);
 controller Controller1 = controller(primary);
+gps GPS8 = gps(PORT13, 0.00, -240.00, mm, 180);
+motor BrazoMotor2 = motor(PORT14, ratio18_1,true);
+
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
@@ -29,6 +32,7 @@ bool Controller1LeftShoulderControlMotorsStopped = true;
 bool Controller1RightShoulderControlMotorsStopped = true;
 bool DrivetrainLNeedsToBeStopped_Controller1 = true;
 bool DrivetrainRNeedsToBeStopped_Controller1 = true;
+bool Controller1UpDownButtonsStopped = true;
 
 // define a task that will handle monitoring inputs from Controller1
 int rc_auto_loop_function_Controller1() {
@@ -102,6 +106,19 @@ int rc_auto_loop_function_Controller1() {
         Matraca.stop(hold);
         // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
         Controller1RightShoulderControlMotorsStopped = true;
+      }
+      
+      // check the ButtonUp/ButtonDown status to control BRAZO2
+      if (Controller1.ButtonUp.pressing()) {
+        BrazoMotor2.spin(reverse,30,percent);
+        Controller1UpDownButtonsStopped = false;
+      } else if (Controller1.ButtonDown.pressing()) {
+        BrazoMotor2.spin(forward,30,percent);
+        Controller1UpDownButtonsStopped = false;
+      } else if (!Controller1UpDownButtonsStopped) {
+        BrazoMotor2.stop(hold);
+        // set the toggle so that we don't constantly tell the motor to stop when the buttons are released
+        Controller1UpDownButtonsStopped = true;
       }
     }
     // wait before repeating the process

@@ -6,6 +6,7 @@ extern brain Brain;
 extern drivetrain Drivetrain;
 extern motor_group BRAZO;
 extern controller Controller1;
+extern gps GPS8;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

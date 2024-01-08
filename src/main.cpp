@@ -96,6 +96,13 @@ void pre_auton(void) {
   avanzar(-28);
 }
 
+void printPosition() {
+  // Print GPS position values to the V5 Brain
+  Brain.Screen.print("X: %.2f", GPS8.xPosition(mm));
+  Brain.Screen.print("  Y: %.2f", GPS8.yPosition(mm));
+  Brain.Screen.newLine();
+}
+
 void autonomoalterno()
 {
  Drivetrain.setDriveVelocity(lento, percent);
@@ -120,6 +127,53 @@ void autonomoalterno()
   Drivetrain.stop();
 }
 
+/* 
+
+void movimientoGPS(int equis, int ye)
+{
+  {
+  // Calibrate the GPS before starting
+  GPS8.calibrate();
+  while (GPS8.isCalibratRing()) { task::sleep(50); }
+
+  // Orient the drivetrain's heading with the GPS heading
+  //Drivetrain.setHeading(GPS8.heading(), degrees);
+  Drivetrain.setTurnVelocity(25, percent);
+
+  // Print the starting position of the robot
+  printPosition();
+
+  // Store the current position of the robot
+  float startingX = GPS8.xPosition(mm);
+  float startingY = GPS8.yPosition(mm);
+
+  // Store the target ending position of the robot
+  float endingX = equis;
+
+  float endingY = ye;
+
+  // Implement atan2 to calculate the heading that the robot needs to
+  // turn to in order to drive towards the ending position
+  float turnAngle = atan((endingX - startingX) / (endingY - startingY)) * 180 / M_PI;
+  if (endingY - startingY < 0) {
+    turnAngle = turnAngle + 180;
+  }
+
+  // Turn the robot to face the ending position
+  Drivetrain.turnToHeading(turnAngle, degrees, true);
+
+  // Calculate the drive distance needed, then drive towards the target position
+  float driveDistance = sqrt(((endingX - startingX) * (endingX - startingX)) + ((endingY - startingY) * (endingY - startingY)));
+
+  Drivetrain.driveFor(forward, driveDistance, mm, true);
+  
+  // Print the ending position of the robot
+  printPosition();
+}
+
+}
+ */
+ 
 void autonomoalterno2()
 {
  Drivetrain.setDriveVelocity(lento, percent);
@@ -197,8 +251,9 @@ void autonomous(void) {
   // Insert autonomous user code here.
   // .........................................................................
 
- autonomoalterno2();
- //autonomoSkills();
+ //autonomoalterno2();
+ //movimientoGPS(10,10);
+ autonomoSkills();
   
 }
 
